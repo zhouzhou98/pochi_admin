@@ -1,24 +1,24 @@
 import request from '@/utils/request'
+const groupName = 'sysUser'
 
 export function login(data) {
   return request({
-    url: '/vue-element-admin/user/login',
+    url: `/${groupName}/login`,
     method: 'post',
     data
   })
 }
 
-export function getInfo(token) {
+export function getInfo() {
   return request({
-    url: '/vue-element-admin/user/info',
-    method: 'get',
-    params: { token }
+    url: `/${groupName}/info`,
+    method: 'get'
   })
 }
 
 export function logout() {
   return request({
-    url: '/vue-element-admin/user/logout',
-    method: 'post'
+    url: `/${groupName}/logout`,
+    method: 'get'
   })
 }

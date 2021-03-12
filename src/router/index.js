@@ -8,7 +8,6 @@ import Layout from '@/layout'
 
 /* Router Modules */
 import componentsRouter from './modules/components'
-import chartsRouter from './modules/charts'
 import tableRouter from './modules/table'
 import nestedRouter from './modules/nested'
 
@@ -82,16 +81,41 @@ export const constantRoutes = [
         meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
       }
     ]
-  },
+  }
+]
+
+/**
+ * asyncRoutes
+ * the routes that need to be dynamically loaded based on user roles
+ */
+export const asyncRoutes = [
   {
-    path: '/documentation',
+    path: '/sys',
     component: Layout,
+    redirect: '/sys/user',
+    name: 'system',
+    meta: {
+      title: '系统管理',
+      icon: 'documentation'
+    },
     children: [
       {
-        path: 'index',
-        component: () => import('@/views/documentation/index'),
-        name: 'Documentation',
-        meta: { title: 'Documentation', icon: 'documentation', affix: true }
+        path: 'user',
+        component: () => import('@/views/system/user/sys-user-list'),
+        name: 'user',
+        meta: { title: '后台用户', icon: 'documentation' }
+      },
+      {
+        path: 'role',
+        component: () => import('@/views/system/role/sys-role-list'),
+        name: 'role',
+        meta: { title: '角色管理', icon: 'documentation' }
+      },
+      {
+        path: 'menu',
+        component: () => import('@/views/system/menu/sys-menu-list'),
+        name: 'menu',
+        meta: { title: '菜单管理', icon: 'documentation' }
       }
     ]
   },
@@ -121,14 +145,7 @@ export const constantRoutes = [
         meta: { title: 'Profile', icon: 'user', noCache: true }
       }
     ]
-  }
-]
-
-/**
- * asyncRoutes
- * the routes that need to be dynamically loaded based on user roles
- */
-export const asyncRoutes = [
+  },
   {
     path: '/permission',
     component: Layout,
@@ -186,7 +203,6 @@ export const asyncRoutes = [
 
   /** when your routing map is too long, you can split it into small modules **/
   componentsRouter,
-  chartsRouter,
   nestedRouter,
   tableRouter,
 
