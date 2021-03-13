@@ -25,6 +25,7 @@ export default {
 <style lang="scss" scoped>
 .app-main {
   /* 50= navbar  50  */
+  padding: 20px;
   min-height: calc(100vh - 50px);
   width: 100%;
   position: relative;
@@ -53,5 +54,16 @@ export default {
   .fixed-header {
     padding-right: 15px;
   }
+}
+
+.button-group {
+  margin-bottom: 15px;
+}
+.pageable {
+  margin-top: 15px;
+}
+.pochi-table-header th {
+  background: #DFDFDF;
+  color: #131111;
 }
 </style>
