@@ -2,6 +2,23 @@
   <div>
     <el-form ref="form" :model="sysUser" label-width="80px" size="small">
       <el-row :gutter="20">
+        <el-col :span="24" :offset="0">
+          <el-form-item label="头像">
+            <el-upload
+              class="avatar-uploader"
+              :action="uploadUrl"
+              :show-file-list="false"
+              :data="{dir: 'header'}"
+              :headers="{Authorization: token}"
+              :on-success="handleAvatarSuccess"
+            >
+              <img v-if="imageUrl" :src="imageUrl" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon" />
+            </el-upload>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item label="账号">
             <el-input v-model="sysUser.username" readonly placeholder="请输入账号" />
@@ -52,6 +69,7 @@
 <script>
 import sysUserApi from '@/api/sys-user'
 import sysRoleApi from '@/api/sys-role'
+import { mapGetters } from 'vuex'
 export default {
   props: {
     // 调用方传来的用户ID
@@ -67,9 +85,18 @@ export default {
         // 角色信息
         sysRole: {}
       },
+      // 文件上传路径
+      uploadUrl: process.env.VUE_APP_UPLOAD_URL,
+      // 图片回显地址
+      imageUrl: null,
       // 角色下拉列表
       roleList: []
     }
+  },
+  computed: {
+    ...mapGetters([
+      'token'
+    ])
   },
   watch: {
     activeId: {
@@ -89,6 +116,7 @@ export default {
     getById(id) {
       sysUserApi.get(id).then(res => {
         this.sysUser = res.data
+        this.imageUrl = this.sysUser.header
       })
     },
     // 修改用户
@@ -99,6 +127,12 @@ export default {
         this.$emit('close')
         this.$emit('after')
       })
+    },
+    // 上传图片成功后的回调
+    handleAvatarSuccess(res, file) {
+      this.$message.success(res.msg)
+      this.imageUrl = res.data
+      this.sysUser.header = this.imageUrl
     },
     // 查询所有角色
     getAllRole() {
@@ -111,5 +145,27 @@ export default {
 </script>
 
 <style>
-
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
 </style>

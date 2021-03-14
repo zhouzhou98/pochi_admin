@@ -57,7 +57,7 @@
           </template>
         </el-table-column>
         <el-table-column align="center" prop="note" label="备注" />
-        <el-table-column align="center" label="操作">
+        <el-table-column align="center" label="操作" width="140">
           <template slot-scope="{row}">
             <el-button type="text" icon="el-icon-document" @click="toInfo(row.id)">详情</el-button>
             <el-dropdown class="handle-button">

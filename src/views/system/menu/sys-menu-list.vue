@@ -14,31 +14,31 @@
         row-key="menuId"
         style="width: 100%"
       >
-        <el-table-column prop="menuId" label="菜单编号" width="100px" />
-        <el-table-column prop="menuName" label="名称" />
-        <el-table-column prop="orderNum" label="排序" width="60px" />
-        <el-table-column prop="componentUrl" label="组件路径" />
-        <el-table-column prop="menuType" label="菜单类型" width="80px">
+        <el-table-column prop="menuId" align="center" label="菜单编号" width="100px" />
+        <el-table-column prop="menuName" align="center" label="名称" />
+        <el-table-column prop="orderNum" align="center" label="排序" width="60px" />
+        <el-table-column prop="componentUrl" align="center" label="组件路径" />
+        <el-table-column prop="menuType" align="center" label="菜单类型" width="80px">
           <template slot-scope="{row}">
             <el-tag v-if="row.menuType === 1">目录</el-tag>
             <el-tag v-if="row.menuType === 2">菜单</el-tag>
             <el-tag v-if="row.menuType === 3">权限</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="visible" label="显示状态" width="80px">
+        <el-table-column prop="visible" align="center" label="显示状态" width="80px">
           <template slot-scope="{row}">
             <el-tag v-if="row.visible === 1">显示</el-tag>
             <el-tag v-if="row.visible === 0" type="info">隐藏</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="status" label="启用状态" width="80px">
+        <el-table-column prop="status" align="center" label="启用状态" width="80px">
           <template slot-scope="{row}">
             <el-tag v-if="row.status === 1">启用</el-tag>
             <el-tag v-if="row.status === 0" type="info">禁用</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="permission" label="权限标识" />
-        <el-table-column prop="icon" label="菜单图标">
+        <el-table-column prop="permission" align="center" label="权限标识" />
+        <el-table-column prop="icon" align="center" label="菜单图标">
           <template slot-scope="{row}">
             <div v-if="row.icon">
               <i v-if="row.icon.indexOf('el-icon') >= 0" :class="row.icon" />
@@ -46,11 +46,11 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" />
-        <el-table-column prop="createBy" label="创建人" width="120px" />
-        <el-table-column prop="updateTime" label="修改时间" />
-        <el-table-column prop="updateBy" label="修改人" width="120px" />
-        <el-table-column label="操作" width="80px">
+        <el-table-column prop="createTime" align="center" label="创建时间" />
+        <el-table-column prop="createBy" align="center" label="创建人" width="120px" />
+        <el-table-column prop="updateTime" align="center" label="修改时间" />
+        <el-table-column prop="updateBy" align="center" label="修改人" width="120px" />
+        <el-table-column label="操作" align="center" width="80px">
           <template slot-scope="{row}">
             <el-dropdown class="handle-button">
               <span class="el-dropdown-link">

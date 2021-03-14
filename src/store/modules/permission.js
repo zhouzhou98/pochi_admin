@@ -1,5 +1,6 @@
-import { asyncRoutes, constantRoutes } from '@/router'
-
+import { constantRoutes } from '@/router'
+import Layout from '@/layout'
+import sysMenuApi from '@/api/sys-menu'
 /**
  * Use meta.role to determine if the current user has permission
  * @param roles
@@ -23,13 +24,25 @@ export function filterAsyncRoutes(routes) {
 
   routes.forEach(route => {
     const tmp = { ...route }
-    if (tmp.children) {
+    if (tmp.component) {
+    // Layout组件特殊处理
+      if (tmp.component === 'Layout') {
+        tmp.component = Layout
+      } else {
+        tmp.component = loadView(route.component)
+      }
+    }
+    if (tmp.children && tmp.children[0]) {
       tmp.children = filterAsyncRoutes(tmp.children)
     }
     res.push(tmp)
   })
 
   return res
+}
+
+export const loadView = (view) => { // 路由懒加载
+  return (resolve) => require([`@/views/${view}`], resolve)
 }
 
 const state = {
@@ -47,9 +60,12 @@ const mutations = {
 const actions = {
   generateRoutes({ commit }) {
     return new Promise(resolve => {
-      let accessedRoutes = accessedRoutes = filterAsyncRoutes(asyncRoutes)
-      commit('SET_ROUTES', accessedRoutes)
-      resolve(accessedRoutes)
+      sysMenuApi.getRouters().then(res => {
+        // console.log(asyncRoutes, res.data)
+        const accessedRoutes = filterAsyncRoutes(res.data)
+        commit('SET_ROUTES', accessedRoutes)
+        resolve(accessedRoutes)
+      })
     })
   }
 }
